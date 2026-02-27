@@ -1,1 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onboarding Homepage — Raptive</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #f9fafb;
+      --surface: #ffffff;
+      --green: #059669;
+      --green-bg: #d1fae5;
+      --blue: #2563eb;
+      --blue-bg: #dbeafe;
+      --red: #dc2626;
+      --red-bg: #fee2e2;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    .page { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+    /* Top Bar (Sites header) */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .top-bar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 0;
+    }
+    .top-bar-label { font-size: 16px; font-weight: 700; color: var(--text); }
+    .top-bar-site-link { font-size: 15px; font-weight: 500; color: var(--green); text-decoration: underline; }
+    .top-bar-site-link:hover { color: #047857; }
+    .top-bar-dropdown {
+      padding: 6px 12px;
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .top-bar-search {
+      flex: 1;
+      min-width: 180px;
+      max-width: 280px;
+      padding: 6px 12px;
+      background: #f3f4f6;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    .top-bar-search::placeholder { color: var(--text-muted); }
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .top-bar-link { font-size: 13px; font-weight: 500; color: var(--green); text-decoration: underline; }
+    .top-bar-link:hover { color: #047857; }
+    .status-pill {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--blue-bg);
+      color: var(--blue);
+    }
+    .btn-save { padding: 8px 20px; background: var(--green); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; }
+
+    /* Basic Info Section - compact */
+    .basic-info {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px 24px;
+    }
+    .basic-info h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin: 0 0 10px 0; grid-column: 1 / -1; }
+    .info-item label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+    .info-item .value { font-size: 12px; font-weight: 500; }
+    .info-item.span-2 { grid-column: span 2; }
+    .info-item.info-row-2 { display: flex; gap: 24px; grid-column: 1 / -1; }
+    .info-item.info-row-2 > div { flex: 1; }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    /* Collapsible Section */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .section-header:hover { background: #fafafa; }
+    .section-header-left { display: flex; align-items: center; gap: 16px; }
+    .section-node {
+      position: absolute;
+      left: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      margin-left: -37px;
+    }
+    .section-node.pending { background: var(--border); color: var(--text-muted); }
+    .section-title { font-size: 16px; font-weight: 600; margin: 0; }
+    .section-toggle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+    }
+    .section.collapsed .section-toggle { transform: rotate(-90deg); }
+    .section-body { padding: 0 20px 20px; }
+    .section.collapsed .section-body { display: none; }
+
+    .override-btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .override-btn.submitted { background: var(--green-bg); color: var(--green); }
+    .override-btn.pending { background: var(--border); color: var(--text-muted); }
+    .status-btn.approved {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--green);
+      color: white;
+      border: none;
+    }
+    .override-row { display: flex; align-items: center; gap: 12px; margin-top: 12px; }
+    .override-row input[type="checkbox"] { accent-color: var(--green); }
+
+    /* Section content */
+    .field-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    .field-row:last-child { border-bottom: none; }
+    .field-row .field-content { flex: 1; min-width: 420px; }
+    .field-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .field-value { font-size: 13px; color: var(--text-muted); }
+    .field-actions { display: flex; align-items: center; gap: 8px; }
+    .field-actions .icon { font-size: 18px; }
+    .field-actions .icon.success { color: var(--green); }
+    .field-actions .icon.error { color: var(--red); }
+
+    .field-group {
+      background: #f9fafb;
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .field-group-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 12px; }
+    .field-group .field-row { padding: 8px 0; border-bottom-color: #e5e7eb; }
+    .field-group .field-row:last-child { border-bottom: none; }
+
+    .completion-date { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
+    .completion-date::before { content: '🕐 '; }
+    .captured-data { font-size: 12px; margin-top: 12px; }
+    .captured-data-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; }
+    .captured-data .data-item { margin-bottom: 4px; }
+
+    .btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; border: none; }
+    .btn-primary { background: var(--green); color: white; }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn-icon {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-icon:hover { background: #f3f4f6; }
+    a.btn-icon { text-decoration: none; }
+    .field-input-with-copy { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
+    .field-input-with-copy input { flex: 1; min-width: 0; }
+
+    /* Verification Details Dropdown */
+    .dropdown-wrap { margin-top: 8px; }
+    .dropdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .dropdown-header:hover { border-color: var(--blue); }
+    .dropdown-content {
+      display: none;
+      padding: 16px;
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+    }
+.dropdown.open .dropdown-content { display: block; }
+.dropdown.open .dropdown-header { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.dropdown-header span:last-child { transition: transform 0.2s; }
+.dropdown.open .dropdown-header span:last-child { transform: rotate(180deg); }
+    .verification-item { padding: 8px 0; font-size: 13px; }
+    .verification-item .status { font-weight: 500; }
+    .verification-item .status.passed { color: var(--green); }
+    .verification-item .status.failed { color: var(--red); }
+
+    /* Wizard checkpoints */
+    .wizard-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--green);
+      background: var(--green-bg);
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-left: 8px;
+    }
+    .wizard-badge::before { content: '✓'; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="top-bar-label">Sites</span>
+      <a href="#" class="top-bar-site-link">Crazy Busy Mama</a>
+
+      <input type="search" class="top-bar-search" placeholder="Search Sites">
+    </div>
+    <div class="top-bar-right">
+      <a href="https://admin.raptive.com/applications/1d1028e9-301d-439a-b2d7-f4bd846647d1/overview" class="top-bar-link">Application</a>
+      <a href="https://admin.raptive.com/organizations/6968f5e6151a7906f2b5cae5/overview" class="top-bar-link">Organization</a>
+      <span class="status-pill">Setup</span>
+    </div>
+  </div>
+
+  <!-- Basic Info Section -->
+  <section class="basic-info">
+    <h3>Site Information</h3>
+    <div class="info-item"><label>Site Name</label><span class="value">Crazy Busy Mama</span></div>
+    <div class="info-item"><label>Owner Name</label><span class="value">Lori Conway</span></div>
+    <div class="info-item"><label>Email</label><span class="value">lori@crazybusymama.com</span></div>
+    
+    <div class="info-item info-row-2">
+      <div><label>Applicant Name</label><span class="value">Lori Conway</span></div>
+      <div><label>Site Involvement</label><span class="value">Owner</span></div>
+    </div>
+    <div class="info-item"><label>Current Ad Network</label><span class="value">Mediavine</span></div>
+    <div class="info-item"><label>Monthly Pageviews</label><span class="value">136,233</span></div>
+    <div class="info-item"><label>CMS</label><span class="value">WordPress</span></div>
+    <div class="info-item"><label>Vertical</label><span class="value">Food</span></div>
+    <div class="info-item"><label>Secondary Vertical</label><span class="value">Family and Parenting</span></div>
+    <div class="info-item span-2"><label>Site ID</label><span class="value">6968f5e6dc282c06f298210c</span></div>
+    <div class="info-item span-2"><label>Org ID</label><span class="value">6968f5e6151a7906f2b5cae5</span></div>
+  </section>
+
+  <!-- Timeline with Collapsible Sections -->
+  <div class="timeline">
+    <!-- Data Collection -->
+    <div class="section collapsed" id="section-data-collection">
+      <div class="section-header" onclick="toggleSection('data-collection')">
+        <div class="section-header-left">
+          <span class="section-node">✓</span>
+          <h2 class="section-title">Data Collection <span class="wizard-badge">Onboarding Wizard I Access</span><span class="wizard-badge">Initial Analysis Acceptance</span></h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="override-btn submitted">✓ Submitted</button>
+          <span class="section-toggle">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field-content">
+            <div class="field-label">Google Analytics</div>
+            <div class="field-input-with-copy">
+              <select id="input-google-analytics" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;min-width:280px;">
+                <option value="creator.analytics.3@raptive.com" selected>creator.analytics.3@raptive.com</option>
+                <option value="creator.analytics.9@raptive.com">creator.analytics.9@raptive.com</option>
+                <option value="creator.analytics.5@raptive.com">creator.analytics.5@raptive.com</option>
+                <option value="creator.analytics.7@raptive.com">creator.analytics.7@raptive.com</option>
+                <option value="creator.analytics.10@raptive.com">creator.analytics.10@raptive.com</option>
+                <option value="creator.analytics.6@raptive.com">creator.analytics.6@raptive.com</option>
+                <option value="creator.analytics.8@raptive.com">creator.analytics.8@raptive.com</option>
+                <option value="creator.analytics.4@raptive.com">creator.analytics.4@raptive.com</option>
+                <option value="creator.analytics.2@raptive.com">creator.analytics.2@raptive.com</option>
+                <option value="creator.analytics.1@raptive.com">creator.analytics.1@raptive.com</option>
+                <option value="pub.data@raptive.com">pub.data@raptive.com</option>
+                <option value="adthrive.ga@adthrive.com">adthrive.ga@adthrive.com</option>
+                <option value="at.analytics@adthrive.com">at.analytics@adthrive.com</option>
+                <option value="pub.analytics@adthrive.com">pub.analytics@adthrive.com</option>
+                <option value="scraper@adthrive.com">scraper@adthrive.com</option>
+                <option value="pub.analytics.1@adthrive.com">pub.analytics.1@adthrive.com</option>
+                <option value="analytics.pub@adthrive.com">analytics.pub@adthrive.com</option>
+                <option value="cam.ga@cafemedia.com">cam.ga@cafemedia.com</option>
+              </select>
+              <button type="button" class="btn-icon" onclick="copyToClipboard('input-google-analytics')">Copy</button>
+            </div>
+          </div>
+          <div class="field-actions">
+            <span class="icon success">✓</span>
+            <label><input type="checkbox"> Override</label>
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <div class="field-label">Ad Performance</div>
+            <div style="margin-top:6px;"><a href="#" style="color:var(--blue);">Download Ad Performance</a> · <a href="#" style="color:var(--blue);">Upload Ad Performance</a></div>
+          </div>
+          <div class="field-actions">
+            <span class="icon success">✓</span>
+            <label><input type="checkbox"> Override</label>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field-content">
+            <div class="field-label">Approvals</div>
+            <div style="margin-top:6px;font-size:13px;">Google Ad Manager invite</div>
+            <div class="field-input-with-copy">
+              <input type="text" id="input-gam-invite" value="lori@conwayadventure.com" readonly style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;background:#f9fafb;color:var(--text);">
+              <button type="button" class="btn-icon" onclick="copyToClipboard('input-gam-invite')">Copy</button>
+            </div>
+          </div>
+          <div class="field-actions">
+            <span class="icon success">✓</span>
+            <label><input type="checkbox"> Override</label>
+          </div>
+        </div>
+        <div class="field-row">
+          <div>
+            <div class="field-label">Data Agreement</div>
+            <div class="completion-date" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+          </div>
+          <div class="field-actions">
+            <span class="icon success">✓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google Ad Manager -->
+    <div class="section collapsed" id="section-gam">
+      <div class="section-header" onclick="toggleSection('gam')">
+        <div class="section-header-left">
+          <span class="section-node">✓</span>
+          <h2 class="section-title">Google Ad Manager</h2>
+          <a href="https://admanager.google.com/18190176#admin/mcm/child_publisher/detail/child_publisher_id=5988344291" target="_blank" rel="noopener noreferrer" class="btn-icon" onclick="event.stopPropagation()">Open</a>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="override-btn submitted">Account + Domain Approved</button>
+          <span class="section-toggle">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field-group">
+          <div class="field-group-title">Account & Verification Status</div>
+          <div class="field-row">
+            <span class="field-label">Child Pub Status</span>
+            <span class="field-value">ACCEPTED</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Google Review Status</span>
+            <span class="field-value">APPROVED</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Child Code</span>
+            <span class="field-value"><input type="text" value="23075715347" style="padding:6px 10px;border:1px solid var(--border);border-radius:4px;width:140px;"> <button class="btn btn-secondary" style="padding:6px 12px;">Set</button></span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Identity Verification</span>
+            <span class="field-value">Verified</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Address Verification</span>
+            <span class="field-value">Verified</span>
+          </div>
+        </div>
+        <div class="field-group">
+          <div class="field-group-title">Domain Status</div>
+          <div class="field-row">
+            <span class="field-label">Submit Domain for Review</span>
+            <button class="btn btn-primary">Submit</button>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Site Status</span>
+            <span class="field-value">APPROVED</span>
+          </div>
+          <div class="field-row">
+            <span class="field-label">Enable</span>
+            <button class="btn btn-secondary" disabled>Enabled</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+
+    <!-- Site Setup -->
+    <div class="section collapsed" id="section-site-setup">
+      <div class="section-header" onclick="toggleSection('site-setup')">
+        <div class="section-header-left">
+          <span class="section-node">✓</span>
+          <h2 class="section-title">Site Setup <span class="wizard-badge">Onboarding Wizard II Access</span></h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="override-btn submitted">✓ Submitted</button>
+    
+          <span class="section-toggle">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div>
+            <div class="field-label">Comscore</div>
+            <input type="text" value="Lori Conway" placeholder="Company Name (Required for Install)" style="margin-top:6px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;width:100%;max-width:280px;">
+            <label style="display:block;margin-top:8px;font-size:13px;"><input type="checkbox"> Enable Comscore Ad Options</label>
+          </div>
+          <div class="field-actions"><label><input type="checkbox"> Override</label></div>
+        </div>
+        <div class="field-row">
+          <div>
+            <div class="field-label">Install Access</div>
+            <div style="margin-top:6px;display:flex;align-items:center;gap:8px;">
+              <input type="text" id="input-install-access" value="https://www.crazybusymama.com/wp-login.php" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;">
+              <button type="button" class="btn-icon" onclick="openUrl('input-install-access')">Open</button>
+            </div>
+          </div>
+          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+        </div>
+        <div class="field-row">
+          <div>
+            <div class="field-label">Privacy Policy</div>
+            <div style="margin-top:6px;display:flex;align-items:center;gap:8px;">
+              <input type="text" id="input-privacy-policy" value="https://www.crazybusymama.com/privacy-policy-1/" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;">
+              <button type="button" class="btn-icon" onclick="openUrl('input-privacy-policy')">Open</button>
+            </div>
+          </div>
+          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+        </div>
+        <div class="field-row">
+          <div style="flex:1;">
+            <div class="field-label">Persona Verification</div>
+            <div class="completion-date" style="margin-top:6px;">Feb 2, 2026, 1:23:54 PM</div>
+            <div class="dropdown-wrap" style="margin-top:12px;">
+              <div class="dropdown" id="dropdown-verification">
+                <div class="dropdown-header" onclick="toggleDropdown('verification')">
+                  <span>Verification Details — Case: <span class="status-btn approved">Approved</span> Feb 2, 2026, 01:23 PM</span>
+                  <span>▼</span>
+                </div>
+                <div class="dropdown-content">
+                  <div class="verification-item">Verification: Government Id <span class="status passed">Passed</span></div>
+                  <div class="verification-item">Verification: Selfie <span class="status passed">Passed</span></div>
+                  <div class="verification-item">Verification: Business Website <span class="status failed">Failed</span></div>
+                  <div class="verification-item">Verification: Database Business <span class="status passed">Passed</span></div>
+                  <div class="verification-item">Report: Business Associated Persons — name: LORI CONWAY positions: director, president, secretary, treasurer; name: WITHERS, BRANT, IGOE & MULLENNIX position: registered agent</div>
+                  <div class="verification-item">Report: Business Registrations Lookup <span class="status passed">Ready</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+        </div>
+        <div class="field-row">
+          <div>
+            <div class="field-label">Payment & Tax Info</div>
+            <div class="field-value" style="margin-top:6px;">"Skinny Wrap Divas INC" (Payee) = "Skinny Wrap Divas INC" (Organization)</div>
+          </div>
+          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+        </div>
+        <div class="field-row">
+          <div>
+            <div class="field-label">Service Agreement</div>
+            <div class="completion-date" style="margin-top:6px;">Feb 2, 2026, 1:38:56 PM</div>
+          </div>
+          <div class="field-actions"><span class="icon success">✓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Second Analysis -->
+    <div class="section collapsed" id="section-second-analysis">
+      <div class="section-header" onclick="toggleSection('second-analysis')">
+        <div class="section-header-left">
+          <span class="section-node">✓</span>
+          <h2 class="section-title">Second Analysis <span class="wizard-badge">2nd Analysis Data Collection</span></h2>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button class="override-btn submitted">✓ Submitted</button>
+          
+          <span class="section-toggle">▼</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div>
+            <div class="field-label">Ad Performance</div>
+            <div style="margin-top:6px;"><a href="#" style="color:var(--blue);">Download Ad Performance</a> · <a href="#" style="color:var(--blue);">Upload Ad Performance</a></div>
+          </div>
+          <div class="field-actions">
+            <span class="icon success">✓</span>
+            <label><input type="checkbox"> Override</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+<script>
+function toggleSection(id) {
+  const el = document.getElementById('section-' + id);
+  if (el) el.classList.toggle('collapsed');
+}
+function toggleDropdown(id) {
+  const el = document.getElementById('dropdown-' + id);
+  if (el) el.classList.toggle('open');
+}
+function copyToClipboard(inputId) {
+  const el = document.getElementById(inputId);
+  if (el && navigator.clipboard) {
+    navigator.clipboard.writeText(el.value).then(function() {
+      const btn = el.nextElementSibling;
+      if (btn) { btn.textContent = 'Copied!'; setTimeout(function() { btn.textContent = 'Copy'; }, 1500); }
+    });
+  }
+}
+function openUrl(inputId) {
+  const input = document.getElementById(inputId);
+  if (input && input.value) window.open(input.value, '_blank', 'noopener,noreferrer');
+}
+</script>
+</body>
+</html>
 

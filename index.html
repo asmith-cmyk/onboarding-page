@@ -382,6 +382,9 @@
     .more-info-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px 40px; }
     .more-info-col-right .more-info-item { margin-bottom: 10px; }
     .more-info-col-dates .info-date-input { width: 100%; box-sizing: border-box; }
+    .more-info-notes-input { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; box-sizing: border-box; margin-top: 4px; }
+    .more-info-notes-input:focus { outline: none; border-color: var(--green); }
+    .notes-char-count { font-size: 11px; color: var(--text-muted); margin-top: 4px; display: block; }
     .more-info-item { margin-bottom: 8px; font-size: 13px; }
     .more-info-item a { color: var(--green); text-decoration: underline; }
     .more-info-item a:hover { color: #047857; }
@@ -484,7 +487,11 @@
               <a href="https://cafemedia.lightning.force.com/lightning/r/MPM4_BASE__Milestone1_Project__c/a0zQQ0000028njxYAA/view" target="_blank" rel="noopener noreferrer">Salesforce Project</a>
             </div>
             <div class="more-info-item"><a href="#" target="_blank" rel="noopener noreferrer"> View dashboard as user</a></div>
-
+            <div class="more-info-item">
+              <label style="color:var(--text-muted);">Notes</label>
+              <input type="text" class="more-info-notes-input" id="more-info-notes" maxlength="50" placeholder="Add a note..." title="50 character limit">
+              <span class="notes-char-count"><span id="notes-char-current">0</span>/50</span>
+            </div>
           </div>
           <div class="more-info-col-right">
             <div class="more-info-item"><label style="color:var(--text-muted);">Creator Partnerships Manager</label><span class="value" style="display:block;">Leanne Holley</span></div>
@@ -916,6 +923,11 @@ function syncInstallDatePill() {
     pill.title = 'Install Date: ' + formatted;
   }
 }
+function updateNotesCharCount() {
+  var input = document.getElementById('more-info-notes');
+  var countEl = document.getElementById('notes-char-current');
+  if (input && countEl) countEl.textContent = input.value.length;
+}
 document.addEventListener('DOMContentLoaded', function() {
   syncInstallDatePill();
   var scheduledInput = document.getElementById('scheduled-install-date');
@@ -923,6 +935,9 @@ document.addEventListener('DOMContentLoaded', function() {
     scheduledInput.addEventListener('change', syncInstallDatePill);
     scheduledInput.addEventListener('input', syncInstallDatePill);
   }
+  var notesInput = document.getElementById('more-info-notes');
+  if (notesInput) notesInput.addEventListener('input', updateNotesCharCount);
+  updateNotesCharCount();
 });
 </script>
 </body>

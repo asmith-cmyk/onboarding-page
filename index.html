@@ -21,7 +21,7 @@
     }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
-    .page { max-width: 900px; margin: 0 auto; padding: 24px; }
+    .page { max-width: 1050px; margin: 0 auto; padding: 24px; }
 
     /* Top Bar (Sites header) */
     .top-bar {
@@ -33,6 +33,10 @@
       padding: 12px 0;
       border-bottom: 1px solid var(--border);
       flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 100;
     }
     .top-bar-left {
       display: flex;
@@ -82,28 +86,42 @@
       background: var(--blue-bg);
       color: var(--blue);
     }
+    .status-pill.install-date {
+      background: #fef3c7;
+      color: #b45309;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .existing-creator { font-size: 13px; font-weight: 500; color: var(--green); }
     .btn-save { padding: 8px 20px; background: var(--green); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 13px; cursor: pointer; }
 
-    /* Basic Info Section - compact */
+    /* Basic Info Section - sleeker */
     .basic-info {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 16px;
+      border-radius: 10px;
+      padding: 20px 24px;
       margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .basic-info h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin: 0 0 16px 0; }
+    .info-group {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 8px 24px;
+      gap: 12px 28px;
+      padding: 16px 0;
     }
-    .basic-info h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin: 0 0 10px 0; grid-column: 1 / -1; }
-    .info-item label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-    .info-item .value { font-size: 12px; font-weight: 500; }
+    .info-group:last-of-type { border-bottom: none; padding-bottom: 0; }
+    .info-item label { display: block; font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+    .info-item .value { font-size: 13px; font-weight: 500; }
     .info-item.span-2 { grid-column: span 2; }
-    .info-item.info-row-2 { display: flex; gap: 24px; grid-column: 1 / -1; }
-    .info-item.info-row-2 > div { flex: 1; }
+    .info-date-input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--surface); color: var(--text); min-width: 0; }
+    .info-date-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2); }
+    .cg-lead-select { padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; background: var(--surface); }
 
     /* Timeline */
-    .timeline { position: relative; padding-left: 32px; }
+    .timeline { position: relative; padding-left: 48px; }
     .timeline::before {
       content: '';
       position: absolute;
@@ -120,7 +138,7 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       margin-bottom: 16px;
-      overflow: hidden;
+      overflow: visible;
     }
     .section-header {
       display: flex;
@@ -132,10 +150,12 @@
       transition: background 0.15s;
     }
     .section-header:hover { background: #fafafa; }
-    .section-header-left { display: flex; align-items: center; gap: 16px; }
+    .section { position: relative; }
+    .section-header-left { display: flex; align-items: center; gap: 12px; }
     .section-node {
       position: absolute;
-      left: 0;
+      left: -90px;
+      top: 24px;
       width: 24px;
       height: 24px;
       border-radius: 50%;
@@ -144,11 +164,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
-      margin-left: -37px;
+      font-size: 14px;
+      font-weight: 600;
     }
     .section-node.pending { background: var(--border); color: var(--text-muted); }
     .section-title { font-size: 16px; font-weight: 600; margin: 0; }
+    .section-timestamp { font-size: 11px; font-weight: 400; color: var(--text-muted); margin-left: 8px; }
     .section-toggle {
       width: 28px;
       height: 28px;
@@ -167,18 +188,25 @@
     .section.collapsed .section-body { display: none; }
 
     .override-btn {
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 12px;
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-size: 13px;
       font-weight: 600;
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     .override-btn.submitted { background: var(--green-bg); color: var(--green); }
     .override-btn.pending { background: var(--border); color: var(--text-muted); }
+    .override-label { font-size: 11px; color: var(--text-muted); cursor: pointer; }
+    .override-label input { cursor: pointer; }
+    .btn-override-icon { background: none; border: none; cursor: pointer; padding: 4px; color: var(--text-muted); opacity: 0.7; }
+    .btn-override-icon:hover { opacity: 1; color: var(--text); }
+    .btn-override-icon.active { color:red; }
+    .btn-delete { background: none; border: none; cursor: pointer; padding: 4px; opacity: 0.7; }
+    .btn-delete:hover { opacity: 1; }
     .status-btn.approved {
       display: inline-block;
       padding: 4px 10px;
@@ -203,6 +231,9 @@
     .field-row:last-child { border-bottom: none; }
     .field-row .field-content { flex: 1; min-width: 420px; }
     .field-label { font-size: 13px; font-weight: 500; color: var(--text); }
+    .field-label-row { display: flex; align-items: center; gap: 8px; }
+    .field-label-row .icon { flex-shrink: 0; }
+    .field-label-row .icon.success { color: var(--green); }
     .field-value { font-size: 13px; color: var(--text-muted); }
     .field-actions { display: flex; align-items: center; gap: 8px; }
     .field-actions .icon { font-size: 18px; }
@@ -218,6 +249,8 @@
     .field-group-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 12px; }
     .field-group .field-row { padding: 8px 0; border-bottom-color: #e5e7eb; }
     .field-group .field-row:last-child { border-bottom: none; }
+    .field-value-with-timestamp { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+    .field-value-timestamp { font-size: 11px; color: var(--text-muted); }
 
     .completion-date { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
     .completion-date::before { content: '🕐 '; }
@@ -246,6 +279,14 @@
     a.btn-icon { text-decoration: none; }
     .field-input-with-copy { display: flex; gap: 8px; align-items: center; margin-top: 6px; }
     .field-input-with-copy input { flex: 1; min-width: 0; }
+    .btn-copy-discreet { background: none; border: none; cursor: pointer; padding: 2px 6px; font-size: 11px; color: var(--text-muted); opacity: 0.7; }
+    .btn-copy-discreet:hover { opacity: 1; color: var(--text); }
+    .btn-open-link { display: inline-flex; align-items: center; padding: 4px; color: var(--blue); opacity: 0.9; text-decoration: none; }
+    .btn-open-link:hover { opacity: 1; }
+    .privacy-checks { display: flex; flex-direction: column; gap: 4px; }
+    .privacy-check-item { display: flex; align-items: center; gap: 8px; }
+    .privacy-check-item .icon.success { color: var(--green); }
+    .privacy-check-item .icon.error { color: var(--red); }
 
     /* Verification Details Dropdown */
     .dropdown-wrap { margin-top: 8px; }
@@ -273,6 +314,16 @@
 .dropdown.open .dropdown-header { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 .dropdown-header span:last-child { transition: transform 0.2s; }
 .dropdown.open .dropdown-header span:last-child { transform: rotate(180deg); }
+    .dropdown-header { display: flex; align-items: center; gap: 8px; }
+    .dropdown-header .btn-external-link {
+      margin-left: auto;
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 4px;
+      opacity: 0.9;
+    }
+    .dropdown-header .btn-external-link:hover { opacity: 1; }
     .verification-item { padding: 8px 0; font-size: 13px; }
     .verification-item .status { font-weight: 500; }
     .verification-item .status.passed { color: var(--green); }
@@ -292,6 +343,78 @@
       margin-left: 8px;
     }
     .wizard-badge::before { content: '✓'; }
+    .wizard-badge-pending {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f3f4f6;
+      padding: 4px 10px;
+      border-radius: 100px;
+      margin-left: 8px;
+    }
+    .wizard-badge-pending::before { content: '☐'; font-size: 12px; }
+    .phase-state-select { font-size: 11px; color: var(--text-muted); margin-left: 8px; }
+    .phase-state-select select { padding: 2px 6px; border-radius: 4px; border: 1px solid var(--border); font-size: 11px; margin-left: 4px; }
+    .phase-pill-hidden { display: none !important; }
+
+    /* More Info section */
+    .more-info-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      cursor: pointer;
+      user-select: none;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .more-info-header:hover { color: var(--text); }
+    .more-info-header .chevron { transition: transform 0.2s; }
+    .more-info.collapsed .more-info-header .chevron { transform: rotate(-90deg); }
+    .more-info-content { padding: 12px 0 0; display: block; }
+    .more-info.collapsed .more-info-content { display: none; }
+    .more-info-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px 40px; }
+    .more-info-col-right .more-info-item { margin-bottom: 10px; }
+    .more-info-col-dates .info-date-input { width: 100%; box-sizing: border-box; }
+    .more-info-item { margin-bottom: 8px; font-size: 13px; }
+    .more-info-item a { color: var(--green); text-decoration: underline; }
+    .more-info-item a:hover { color: #047857; }
+    .more-info-subsection { margin-top: 16px; padding-top: 12px; border-top: 1px solid #f3f4f6; }
+    .more-info-subsection-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; }
+    .more-info-links-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .more-info-link-sep { color: var(--text-muted); font-size: 12px; }
+    .creator-growth-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; }
+    .creator-growth-row .cg-lead-select { margin: 0; }
+    .creator-growth-sep { color: var(--text-muted); font-size: 12px; }
+    .hover-popup-container { position: relative; display: inline-block; }
+    .hover-trigger { cursor: pointer; text-decoration: underline; color: var(--green); display: inline-block; padding-bottom: 8px; }
+    .hover-popup {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 100%;
+      margin-top: -4px;
+      padding-top: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 16px 12px 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 50;
+      min-width: 200px;
+    }
+    .hover-popup-container:hover .hover-popup { display: block; }
+    .hover-popup a { display: block; margin-bottom: 6px; color: var(--green); }
+    .hover-popup a:last-child { margin-bottom: 0; }
+    .hover-popup-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .hover-popup-columns .hover-popup-col { display: flex; flex-direction: column; gap: 4px; }
+    .hover-popup.hover-popup-wide { min-width: 360px; }
   </style>
 </head>
 <body>
@@ -300,36 +423,98 @@
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="top-bar-left">
-      <span class="top-bar-label">Sites</span>
-      <a href="#" class="top-bar-site-link">Crazy Busy Mama</a>
-
-      <input type="search" class="top-bar-search" placeholder="Search Sites">
+      <a href="https://www.crazybusymama.com/" class="top-bar-site-link" target="_blank" rel="noopener noreferrer">Crazy Busy Mama</a>
+      <input type="search" class="top-bar-search" placeholder="Search Onboarding Pages">
     </div>
     <div class="top-bar-right">
-      <a href="https://admin.raptive.com/applications/1d1028e9-301d-439a-b2d7-f4bd846647d1/overview" class="top-bar-link">Application</a>
-      <a href="https://admin.raptive.com/organizations/6968f5e6151a7906f2b5cae5/overview" class="top-bar-link">Organization</a>
+      <a href="https://admin.raptive.com/sites/6968f5e6dc282c06f298210c/overview" class="top-bar-link" target="_blank" rel="noopener noreferrer">Sites</a>
+      <a href="https://admin.raptive.com/applications/1d1028e9-301d-439a-b2d7-f4bd846647d1/overview" class="top-bar-link" target="_blank" rel="noopener noreferrer">Application</a>
+      <a href="https://admin.raptive.com/organizations/6968f5e6151a7906f2b5cae5/overview" class="top-bar-link" target="_blank" rel="noopener noreferrer">Organization</a>
       <span class="status-pill">Setup</span>
+      <span class="status-pill install-date" id="install-date-pill" title="Install Date: 2/10/2026"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="install-date-display">2/10/2026</span></span>
     </div>
   </div>
 
   <!-- Basic Info Section -->
   <section class="basic-info">
     <h3>Site Information</h3>
-    <div class="info-item"><label>Site Name</label><span class="value">Crazy Busy Mama</span></div>
-    <div class="info-item"><label>Owner Name</label><span class="value">Lori Conway</span></div>
-    <div class="info-item"><label>Email</label><span class="value">lori@crazybusymama.com</span></div>
-    
-    <div class="info-item info-row-2">
-      <div><label>Applicant Name</label><span class="value">Lori Conway</span></div>
-      <div><label>Site Involvement</label><span class="value">Owner</span></div>
+    <div class="info-group">
+      <div class="info-item"><label>Owner Name</label><span class="value">Lori Conway</span></div>
+      <div class="info-item"><label>Email</label><span class="value">lori@crazybusymama.com</span> <input type="hidden" id="input-email" value="lori@crazybusymama.com"><button type="button" class="btn-copy-discreet" onclick="copyEmailToClipboard(this)" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
+      <div class="info-item"><label>Company Name</label><span class="value">Skinny Wrap Diva Inc</span></div>
+      <div class="info-item"><label>Company Representative</label><span class="value">Lori Conway/Owner</span></div>
+      <div class="info-item"><label> </label><div class="hover-popup-container"><span class="value existing-creator hover-trigger"> Existing Creator (10)</span><span class="hover-popup hover-popup-wide"><div class="hover-popup-columns"><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-1" target="_blank" rel="noopener noreferrer">Yummy Eats</a><a href="https://admin.raptive.com/sites/fake-2" target="_blank" rel="noopener noreferrer">Best Keto Meals</a><a href="https://admin.raptive.com/sites/fake-3" target="_blank" rel="noopener noreferrer">Making Home</a><a href="https://admin.raptive.com/sites/fake-4" target="_blank" rel="noopener noreferrer">Crazy Busy Mama</a><a href="https://admin.raptive.com/sites/fake-5" target="_blank" rel="noopener noreferrer">Skinny Kitchen</a></div><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-6" target="_blank" rel="noopener noreferrer">Fresh Bites Daily</a><a href="https://admin.raptive.com/sites/fake-7" target="_blank" rel="noopener noreferrer">Healthy Mom Life</a><a href="https://admin.raptive.com/sites/fake-8" target="_blank" rel="noopener noreferrer">Quick Recipe Hub</a><a href="https://admin.raptive.com/sites/fake-9" target="_blank" rel="noopener noreferrer">Family Table Blog</a><a href="https://admin.raptive.com/sites/fake-10" target="_blank" rel="noopener noreferrer">Clean Eating Co</a></div></div></span></div></div>
     </div>
-    <div class="info-item"><label>Current Ad Network</label><span class="value">Mediavine</span></div>
-    <div class="info-item"><label>Monthly Pageviews</label><span class="value">136,233</span></div>
-    <div class="info-item"><label>CMS</label><span class="value">WordPress</span></div>
-    <div class="info-item"><label>Vertical</label><span class="value">Food</span></div>
-    <div class="info-item"><label>Secondary Vertical</label><span class="value">Family and Parenting</span></div>
-    <div class="info-item span-2"><label>Site ID</label><span class="value">6968f5e6dc282c06f298210c</span></div>
-    <div class="info-item span-2"><label>Org ID</label><span class="value">6968f5e6151a7906f2b5cae5</span></div>
+    <div class="info-group">
+      <div class="info-item"><label>Current Ad Network</label><span class="value">Mediavine</span></div>
+      <div class="info-item"><label>Monthly Pageviews</label><span class="value">136,233</span></div>
+      <div class="info-item"><label>CMS</label><span class="value">WordPress</span></div>
+      <div class="info-item"><label>Vertical</label><span class="value">Food</span></div>
+    </div>
+    <div class="more-info collapsed" id="more-info" style="grid-column: 1 / -1;">
+      <div class="more-info-header" onclick="toggleMoreInfo()">
+        <span>More Info</span>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="more-info-content">
+        <div class="more-info-columns">
+          <div class="more-info-col-left">
+            <div class="more-info-item">
+              <div class="hover-popup-container">
+                <span class="hover-trigger">Sites in Onboarding (3)</span>
+                <span class="hover-popup">
+                  <a href="https://admin.raptive.com/onboarding/best-eats" target="_blank" rel="noopener noreferrer">The Best Eats</a>
+                  <a href="https://admin.raptive.com/onboarding/food-for-families" target="_blank" rel="noopener noreferrer">Food for Families</a>
+                  <a href="https://admin.raptive.com/onboarding/whats-cooking-with-lori" target="_blank" rel="noopener noreferrer">What's Cooking with Lori</a>
+                </span>
+              </div>
+            </div>
+            <div class="more-info-item">
+              <div class="hover-popup-container">
+                <span class="hover-trigger">Site Users</span>
+                <span class="hover-popup">
+                  <a href="https://admin.raptive.com/users/fake-user-1" target="_blank" rel="noopener noreferrer">Sarah Johnson</a>
+                  <a href="https://admin.raptive.com/users/fake-user-2" target="_blank" rel="noopener noreferrer">Michael Chen</a>
+                </span>
+              </div>
+            </div>
+            <div class="more-info-item more-info-links-row">
+              <a href="https://raptive.zendesk.com/agent/tickets/446711" target="_blank" rel="noopener noreferrer">Zendesk Ticket</a>
+              <span class="more-info-link-sep">·</span>
+              <a href="https://cafemedia.lightning.force.com/lightning/r/MPM4_BASE__Milestone1_Project__c/a0zQQ0000028njxYAA/view" target="_blank" rel="noopener noreferrer">Salesforce Project</a>
+            </div>
+            <div class="more-info-item"><a href="#" target="_blank" rel="noopener noreferrer"> View dashboard as user</a></div>
+
+          </div>
+          <div class="more-info-col-right">
+            <div class="more-info-item"><label style="color:var(--text-muted);">Creator Partnerships Manager</label><span class="value" style="display:block;">Leanne Holley</span></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);">Application Submit Date</label><span class="value" style="display:block;">Jan 15, 2026</span></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);">Application Accepted Date</label><span class="value" style="display:block;">Jan 28, 2026</span></div>
+          </div>
+          <div class="more-info-col-right more-info-col-dates">
+            <div class="more-info-item"><label style="color:var(--text-muted);">Actual Start Date</label><input type="date" class="info-date-input" id="actual-start-date" value="2026-01-15"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);">Second Analysis Date</label><input type="date" class="info-date-input" id="second-analysis-date" value="2026-01-28"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);">Expected Install Date</label><input type="date" class="info-date-input" id="expected-install-date" value="2026-02-10"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);">Scheduled Install Date</label><input type="date" class="info-date-input" id="scheduled-install-date" value="2026-02-10"></div>
+          </div>
+        </div>
+
+        <div class="more-info-subsection">
+          <div class="more-info-subsection-title">Creator Growth</div>
+          <div class="creator-growth-row">
+            <span>Assisted by Creator Growth —</span>
+            <select class="cg-lead-select" id="cg-lead-select">
+              <option value="Carol Edwards" selected>Carol Edwards</option>
+              <option value="Chris Peck">Chris Peck</option>
+              <option value="Antonio Minuta">Antonio Minuta</option>
+              <option value="Janoo Danneeru">Janoo Danneeru</option>
+            </select>
+            <span class="creator-growth-sep">·</span>
+            <a href="https://cafemedia.lightning.force.com/lightning/r/Sales_Handoff__c/a0eQQ000005zQqjYAE/view" target="_blank" rel="noopener noreferrer">Sales Handoff</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Timeline with Collapsible Sections -->
@@ -339,19 +524,26 @@
       <div class="section-header" onclick="toggleSection('data-collection')">
         <div class="section-header-left">
           <span class="section-node">✓</span>
-          <h2 class="section-title">Data Collection <span class="wizard-badge">Onboarding Wizard I Access</span><span class="wizard-badge">Initial Analysis Acceptance</span></h2>
+          <h2 class="section-title">Data Collection 
+            <span class="phase-state-select" onclick="event.stopPropagation()">View: <select id="phase-state-select" onchange="updatePhaseState(this.value)">
+              <option value="both-pending">No Access</option>
+              <option value="data-accepted">DC Access</option>
+              <option value="both-accepted" selected>Full Access</option>
+            </select></span>
+            <span class="wizard-badge wizard-badge-phase" id="badge-data-collection" data-phase="data-collection">Data Collection Access</span><span class="wizard-badge wizard-badge-phase" id="badge-initial-analysis" data-phase="initial-analysis">Initial Analysis Acceptance</span>
+          </h2>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
-          <button class="override-btn submitted">✓ Submitted</button>
+          <button class="override-btn submitted">Done + Analysis Accepted</button>
           <span class="section-toggle">▼</span>
         </div>
       </div>
       <div class="section-body">
         <div class="field-row">
           <div class="field-content">
-            <div class="field-label">Google Analytics</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Google Analytics</div></div>
             <div class="field-input-with-copy">
-              <select id="input-google-analytics" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;min-width:280px;">
+              <select id="input-google-analytics" style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;min-width:425px;">
                 <option value="creator.analytics.3@raptive.com" selected>creator.analytics.3@raptive.com</option>
                 <option value="creator.analytics.9@raptive.com">creator.analytics.9@raptive.com</option>
                 <option value="creator.analytics.5@raptive.com">creator.analytics.5@raptive.com</option>
@@ -371,46 +563,48 @@
                 <option value="analytics.pub@adthrive.com">analytics.pub@adthrive.com</option>
                 <option value="cam.ga@cafemedia.com">cam.ga@cafemedia.com</option>
               </select>
-              <button type="button" class="btn-icon" onclick="copyToClipboard('input-google-analytics')">Copy</button>
+              <button type="button" class="btn-copy-discreet" onclick="copyToClipboardIcon('input-google-analytics', this)" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
             </div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+
           </div>
           <div class="field-actions">
-            <span class="icon success">✓</span>
-            <label><input type="checkbox"> Override</label>
+            <button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
           </div>
         </div>
         <div class="field-row">
           <div>
-            <div class="field-label">Ad Performance</div>
-            <div style="margin-top:6px;"><a href="#" style="color:var(--blue);">Download Ad Performance</a> · <a href="#" style="color:var(--blue);">Upload Ad Performance</a></div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Ad Performance</div></div>
+            <div style="margin-top:6px;display:flex;align-items:center;gap:8px;">
+              <span><a href="#" style="color:var(--blue);">Download Ad Performance</a> · <a href="#" style="color:var(--blue);">Upload Ad Performance</a></span>
+              <button type="button" class="btn-delete" onclick="event.stopPropagation()" title="Delete"><img src="assets/trash-icon.png" alt="Delete" width="18" height="18"></button>
+            </div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
           </div>
           <div class="field-actions">
-            <span class="icon success">✓</span>
-            <label><input type="checkbox"> Override</label>
+            <button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
           </div>
         </div>
         <div class="field-row">
           <div class="field-content">
-            <div class="field-label">Approvals</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Approvals</div></div>
             <div style="margin-top:6px;font-size:13px;">Google Ad Manager invite</div>
             <div class="field-input-with-copy">
-              <input type="text" id="input-gam-invite" value="lori@conwayadventure.com" readonly style="padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;background:#f9fafb;color:var(--text);">
-              <button type="button" class="btn-icon" onclick="copyToClipboard('input-gam-invite')">Copy</button>
+              <input type="text" id="input-gam-invite" value="lori@conwayadventure.com" style="flex:none;width:420px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;background:var(--surface);color:var(--text);">
+              <button type="button" class="btn-copy-discreet" onclick="copyToClipboardIcon('input-gam-invite', this)" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
             </div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
           </div>
           <div class="field-actions">
-            <span class="icon success">✓</span>
-            <label><input type="checkbox"> Override</label>
+            <button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
           </div>
         </div>
         <div class="field-row">
           <div>
-            <div class="field-label">Data Agreement</div>
-            <div class="completion-date" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Data Agreement</div></div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
           </div>
-          <div class="field-actions">
-            <span class="icon success">✓</span>
-          </div>
+          <div class="field-actions"></div>
         </div>
       </div>
     </div>
@@ -433,11 +627,11 @@
           <div class="field-group-title">Account & Verification Status</div>
           <div class="field-row">
             <span class="field-label">Child Pub Status</span>
-            <span class="field-value">ACCEPTED</span>
+            <span class="field-value field-value-with-timestamp">ACCEPTED<span class="field-value-timestamp">Jan 15, 2026, 10:32 AM</span></span>
           </div>
           <div class="field-row">
             <span class="field-label">Google Review Status</span>
-            <span class="field-value">APPROVED</span>
+            <span class="field-value field-value-with-timestamp">APPROVED<span class="field-value-timestamp">Jan 20, 2026, 3:45 PM</span></span>
           </div>
           <div class="field-row">
             <span class="field-label">Child Code</span>
@@ -445,27 +639,29 @@
           </div>
           <div class="field-row">
             <span class="field-label">Identity Verification</span>
-            <span class="field-value">Verified</span>
+            <span class="field-value field-value-with-timestamp">Verified<span class="field-value-timestamp">Jan 18, 2026, 9:15 AM</span></span>
           </div>
           <div class="field-row">
             <span class="field-label">Address Verification</span>
-            <span class="field-value">Verified</span>
+            <span class="field-value field-value-with-timestamp">Verified<span class="field-value-timestamp">Jan 18, 2026, 9:16 AM</span></span>
           </div>
         </div>
         <div class="field-group">
           <div class="field-group-title">Domain Status</div>
+          
+          <div class="field-row">
+            <span class="field-label">Ads.txt File Status</span>
+            <span class="field-value field-value-with-timestamp">UPDATED<span class="field-value-timestamp">Jan 22, 2026, 11:20 AM</span></span>
+          </div>
           <div class="field-row">
             <span class="field-label">Submit Domain for Review</span>
-            <button class="btn btn-primary">Submit</button>
+            <span class="field-value field-value-with-timestamp"><button class="btn btn-secondary">SUBMITTED</button><span class="field-value-timestamp">Jan 23, 2026, 2:10 PM</span></span>
           </div>
           <div class="field-row">
             <span class="field-label">Site Status</span>
-            <span class="field-value">APPROVED</span>
+            <span class="field-value field-value-with-timestamp">APPROVED<span class="field-value-timestamp">Jan 28, 2026, 4:30 PM</span></span>
           </div>
-          <div class="field-row">
-            <span class="field-label">Enable</span>
-            <button class="btn btn-secondary" disabled>Enabled</button>
-          </div>
+        
     
         </div>
       </div>
@@ -476,10 +672,16 @@
       <div class="section-header" onclick="toggleSection('site-setup')">
         <div class="section-header-left">
           <span class="section-node">✓</span>
-          <h2 class="section-title">Site Setup <span class="wizard-badge">Onboarding Wizard II Access</span></h2>
+          <h2 class="section-title">Site Setup
+            <span class="phase-state-select" onclick="event.stopPropagation()">View: <select id="site-setup-phase-select" onchange="updateSiteSetupPhase(this.value)">
+              <option value="pending">No Access</option>
+              <option value="submitted" selected>Access</option>
+            </select></span>
+            <span class="wizard-badge wizard-badge-phase" id="badge-site-setup">Site Setup Access</span>
+          </h2>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
-          <button class="override-btn submitted">✓ Submitted</button>
+          <button class="override-btn submitted">Done</button>
     
           <span class="section-toggle">▼</span>
         </div>
@@ -487,40 +689,53 @@
       <div class="section-body">
         <div class="field-row">
           <div>
-            <div class="field-label">Comscore</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Comscore</div></div>
             <input type="text" value="Lori Conway" placeholder="Company Name (Required for Install)" style="margin-top:6px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;width:100%;max-width:280px;">
             <label style="display:block;margin-top:8px;font-size:13px;"><input type="checkbox"> Enable Comscore Ad Options</label>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+
           </div>
-          <div class="field-actions"><label><input type="checkbox"> Override</label></div>
+          <div class="field-actions"><button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button></div>
         </div>
         <div class="field-row">
           <div>
-            <div class="field-label">Install Access</div>
-            <div style="margin-top:6px;display:flex;align-items:center;gap:8px;">
-              <input type="text" id="input-install-access" value="https://www.crazybusymama.com/wp-login.php" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;">
-              <button type="button" class="btn-icon" onclick="openUrl('input-install-access')">Open</button>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Install Access</div></div>
+            <div class="field-input-with-copy" style="margin-top:6px;">
+              <input type="text" id="input-install-access" value="https://www.crazybusymama.com/wp-login.php" style="flex:1;min-width:420px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;">
+              <a href="#" class="btn-open-link" onclick="openUrl('input-install-access'); return false;" title="Open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
             </div>
+            <div class="section-timestamp" style="margin-top:6px;">Feb 2, 2026, 1:23:54 PM</div>
+
           </div>
-          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+          <div class="field-actions"><button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button></div>
+
         </div>
         <div class="field-row">
           <div>
-            <div class="field-label">Privacy Policy</div>
-            <div style="margin-top:6px;display:flex;align-items:center;gap:8px;">
-              <input type="text" id="input-privacy-policy" value="https://www.crazybusymama.com/privacy-policy-1/" style="flex:1;min-width:200px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;">
-              <button type="button" class="btn-icon" onclick="openUrl('input-privacy-policy')">Open</button>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Privacy Policy</div></div>
+            <div class="field-input-with-copy" style="margin-top:6px;">
+              <input type="text" id="input-privacy-policy" value="https://www.crazybusymama.com/privacy-policy-1/" style="flex:1;min-width:420px;padding:8px 12px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box;">
+              <a href="#" class="btn-open-link" onclick="openUrl('input-privacy-policy'); return false;" title="Open"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
             </div>
+            <div class="privacy-checks" style="margin-top:10px;font-size:13px;">
+              <div class="privacy-check-item"><span class="icon success">✓</span> Advertising Privacy Statement</div>
+              <div class="privacy-check-item"><span class="icon success">✓</span> Advertising Privacy Statement Hyperlinked</div>
+              <div class="privacy-check-item"><span class="icon error">✗</span> Header or footer has the word "Privacy"</div>
+            </div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+
           </div>
-          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+          <div class="field-actions"><button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button></div>
+
         </div>
         <div class="field-row">
           <div style="flex:1;">
-            <div class="field-label">Persona Verification</div>
-            <div class="completion-date" style="margin-top:6px;">Feb 2, 2026, 1:23:54 PM</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Persona Verification</div></div>
             <div class="dropdown-wrap" style="margin-top:12px;">
               <div class="dropdown" id="dropdown-verification">
                 <div class="dropdown-header" onclick="toggleDropdown('verification')">
-                  <span>Verification Details — Case: <span class="status-btn approved">Approved</span> Feb 2, 2026, 01:23 PM</span>
+                  <span>Case: <span class="status-btn approved">Approved</span> </span>
+                  <a href="https://app.withpersona.com/dashboard/cases/case_mumkNGduPBAdHieLHeK7ackctUTe" target="_blank" rel="noopener noreferrer" class="btn-external-link" onclick="event.stopPropagation()" title="Open in new tab"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
                   <span>▼</span>
                 </div>
                 <div class="dropdown-content">
@@ -531,24 +746,30 @@
                   <div class="verification-item">Report: Business Associated Persons — name: LORI CONWAY positions: director, president, secretary, treasurer; name: WITHERS, BRANT, IGOE & MULLENNIX position: registered agent</div>
                   <div class="verification-item">Report: Business Registrations Lookup <span class="status passed">Ready</span></div>
                 </div>
+                <div class="section-timestamp" style="margin-top:6px;">Feb 2, 2026, 1:23:54 PM</div>
+
               </div>
             </div>
           </div>
-          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+          <div class="field-actions"><button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button></div>
+
         </div>
         <div class="field-row">
           <div>
-            <div class="field-label">Payment & Tax Info</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Payment & Tax Info</div></div>
+            
             <div class="field-value" style="margin-top:6px;">"Skinny Wrap Divas INC" (Payee) = "Skinny Wrap Divas INC" (Organization)</div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+
           </div>
-          <div class="field-actions"><span class="icon success">✓</span><label><input type="checkbox"> Override</label></div>
+          <div class="field-actions"><button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button></div>
         </div>
         <div class="field-row">
           <div>
-            <div class="field-label">Service Agreement</div>
-            <div class="completion-date" style="margin-top:6px;">Feb 2, 2026, 1:38:56 PM</div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Service Agreement</div></div>
+            <div class="section-timestamp" style="margin-top:6px;">Feb 2, 2026, 1:38:56 PM</div>
           </div>
-          <div class="field-actions"><span class="icon success">✓</span></div>
+          <div class="field-actions"></div>
         </div>
       </div>
     </div>
@@ -558,10 +779,17 @@
       <div class="section-header" onclick="toggleSection('second-analysis')">
         <div class="section-header-left">
           <span class="section-node">✓</span>
-          <h2 class="section-title">Second Analysis <span class="wizard-badge">2nd Analysis Data Collection</span></h2>
+          <h2 class="section-title">Second Analysis 
+            <span class="phase-state-select" onclick="event.stopPropagation()">View: <select id="second-analysis-phase-select" onchange="updateSecondAnalysisPhase(this.value)">
+              <option value="both-pending">No Access</option>
+              <option value="data-accepted">2A DC Access</option>
+              <option value="both-accepted" selected>Full Access</option>
+            </select></span>
+            <span class="wizard-badge wizard-badge-phase" id="badge-2nd-data" data-phase="data">2nd Analysis Data Collection</span><span class="wizard-badge wizard-badge-phase" id="badge-2nd-acceptance" data-phase="acceptance">2nd Analysis Acceptance</span>
+          </h2>
         </div>
         <div style="display:flex;align-items:center;gap:12px;">
-          <button class="override-btn submitted">✓ Submitted</button>
+          <button class="override-btn submitted">Accepted</button>
           
           <span class="section-toggle">▼</span>
         </div>
@@ -569,12 +797,16 @@
       <div class="section-body">
         <div class="field-row">
           <div>
-            <div class="field-label">Ad Performance</div>
-            <div style="margin-top:6px;"><a href="#" style="color:var(--blue);">Download Ad Performance</a> · <a href="#" style="color:var(--blue);">Upload Ad Performance</a></div>
+            <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Ad Performance</div></div>
+            <div style="margin-top:6px;display:flex;align-items:center;gap:8px;">
+              <span><a href="#" style="color:var(--blue);">Download Ad Performance</a> · <a href="#" style="color:var(--blue);">Upload Ad Performance</a></span>
+              <button type="button" class="btn-delete" onclick="event.stopPropagation()" title="Delete"><img src="assets/trash-icon.png" alt="Delete" width="18" height="18"></button>
+            </div>
+            <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
+
           </div>
           <div class="field-actions">
-            <span class="icon success">✓</span>
-            <label><input type="checkbox"> Override</label>
+            <button type="button" class="btn-override-icon" onclick="event.stopPropagation(); this.classList.toggle('active');" title="Override"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></button>
           </div>
         </div>
       </div>
@@ -587,6 +819,10 @@
 <script>
 function toggleSection(id) {
   const el = document.getElementById('section-' + id);
+  if (el) el.classList.toggle('collapsed');
+}
+function toggleMoreInfo() {
+  const el = document.getElementById('more-info');
   if (el) el.classList.toggle('collapsed');
 }
 function toggleDropdown(id) {
@@ -602,11 +838,92 @@ function copyToClipboard(inputId) {
     });
   }
 }
+function copyEmailToClipboard(btn) {
+  const input = document.getElementById('input-email');
+  if (input && navigator.clipboard) {
+    navigator.clipboard.writeText(input.value).then(function() {
+      btn.title = 'Copied!';
+      setTimeout(function() { btn.title = 'Copy'; }, 1500);
+    });
+  }
+}
+function copyToClipboardIcon(elementId, btn) {
+  const el = document.getElementById(elementId);
+  if (el && navigator.clipboard) {
+    navigator.clipboard.writeText(el.value).then(function() {
+      btn.title = 'Copied!';
+      setTimeout(function() { btn.title = 'Copy'; }, 1500);
+    });
+  }
+}
 function openUrl(inputId) {
   const input = document.getElementById(inputId);
   if (input && input.value) window.open(input.value, '_blank', 'noopener,noreferrer');
 }
+function updatePhaseState(state) {
+  const dc = document.getElementById('badge-data-collection');
+  const ia = document.getElementById('badge-initial-analysis');
+  if (!dc || !ia) return;
+  dc.classList.remove('wizard-badge', 'wizard-badge-pending', 'phase-pill-hidden');
+  ia.classList.remove('wizard-badge', 'wizard-badge-pending', 'phase-pill-hidden');
+  if (state === 'both-pending') {
+    dc.classList.add('wizard-badge-pending');
+    ia.classList.add('phase-pill-hidden');
+  } else if (state === 'data-accepted') {
+    dc.classList.add('wizard-badge');
+    ia.classList.add('wizard-badge-pending');
+  } else {
+    dc.classList.add('wizard-badge');
+    ia.classList.add('wizard-badge');
+  }
+}
+function updateSiteSetupPhase(state) {
+  const badge = document.getElementById('badge-site-setup');
+  if (!badge) return;
+  badge.classList.remove('wizard-badge', 'wizard-badge-pending');
+  badge.classList.add(state === 'pending' ? 'wizard-badge-pending' : 'wizard-badge');
+}
+function updateSecondAnalysisPhase(state) {
+  const dc = document.getElementById('badge-2nd-data');
+  const ia = document.getElementById('badge-2nd-acceptance');
+  if (!dc || !ia) return;
+  dc.classList.remove('wizard-badge', 'wizard-badge-pending', 'phase-pill-hidden');
+  ia.classList.remove('wizard-badge', 'wizard-badge-pending', 'phase-pill-hidden');
+  if (state === 'both-pending') {
+    dc.classList.add('wizard-badge-pending');
+    ia.classList.add('phase-pill-hidden');
+  } else if (state === 'data-accepted') {
+    dc.classList.add('wizard-badge');
+    ia.classList.add('wizard-badge-pending');
+  } else {
+    dc.classList.add('wizard-badge');
+    ia.classList.add('wizard-badge');
+  }
+}
+function formatDateForDisplay(isoDate) {
+  if (!isoDate) return '';
+  var parts = isoDate.split('-');
+  if (parts.length !== 3) return isoDate;
+  return parseInt(parts[1], 10) + '/' + parseInt(parts[2], 10) + '/' + parts[0];
+}
+function syncInstallDatePill() {
+  var input = document.getElementById('scheduled-install-date');
+  var display = document.getElementById('install-date-display');
+  var pill = document.getElementById('install-date-pill');
+  if (input && display && pill) {
+    var formatted = formatDateForDisplay(input.value);
+    display.textContent = formatted;
+    pill.title = 'Install Date: ' + formatted;
+  }
+}
+document.addEventListener('DOMContentLoaded', function() {
+  syncInstallDatePill();
+  var scheduledInput = document.getElementById('scheduled-install-date');
+  if (scheduledInput) {
+    scheduledInput.addEventListener('change', syncInstallDatePill);
+    scheduledInput.addEventListener('input', syncInstallDatePill);
+  }
+});
 </script>
 </body>
 </html>
-

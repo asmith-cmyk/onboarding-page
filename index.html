@@ -235,6 +235,7 @@
     .field-label-row .icon { flex-shrink: 0; }
     .field-label-row .icon.success { color: var(--green); }
     .field-value { font-size: 13px; color: var(--text-muted); }
+    .field-value.payee-match { color: var(--green); font-weight: 500; }
     .field-actions { display: flex; align-items: center; gap: 8px; }
     .field-actions .icon { font-size: 18px; }
     .field-actions .icon.success { color: var(--green); }
@@ -382,6 +383,10 @@
     .more-info-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px 40px; }
     .more-info-col-right .more-info-item { margin-bottom: 10px; }
     .more-info-col-dates .info-date-input { width: 100%; box-sizing: border-box; }
+    .dates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px 20px; }
+    .dates-grid .more-info-item { margin-bottom: 0; }
+    .dates-grid .info-date-input { padding: 6px 8px; font-size: 12px; }
+    .more-info-dates-wrap { margin-top: 16px; padding-top: 16px; border-top: 1px solid #f3f4f6; }
     .more-info-notes-input { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; box-sizing: border-box; margin-top: 4px; }
     .more-info-notes-input:focus { outline: none; border-color: var(--green); }
     .notes-char-count { font-size: 11px; color: var(--text-muted); margin-top: 4px; display: block; }
@@ -395,6 +400,19 @@
     .creator-growth-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; }
     .creator-growth-row .cg-lead-select { margin: 0; }
     .creator-growth-sep { color: var(--text-muted); font-size: 12px; }
+    .whats-next {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding: 14px 22px;
+      font-size: 14px;
+      background: linear-gradient(135deg, rgba(107, 101, 255, 0.08) 0%, rgba(107, 101, 255, 0.18) 100%);
+      border: 1px solid rgba(107, 101, 255, 0.35);
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(107, 101, 255, 0.12);
+    }
+    .whats-next-label {
+      color: #4c46b8; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; font-size: 11px;
+    }
+    .whats-next-sep { color: rgba(107, 101, 255, 0.5); font-size: 18px; line-height: 1; }
+    .whats-next-content { color: #6b65ff; font-weight: 700; font-size: 14px; }
     .hover-popup-container { position: relative; display: inline-block; }
     .hover-trigger { cursor: pointer; text-decoration: underline; color: var(--green); display: inline-block; padding-bottom: 8px; }
     .hover-popup {
@@ -434,7 +452,7 @@
       <a href="https://admin.raptive.com/applications/1d1028e9-301d-439a-b2d7-f4bd846647d1/overview" class="top-bar-link" target="_blank" rel="noopener noreferrer">Application</a>
       <a href="https://admin.raptive.com/organizations/6968f5e6151a7906f2b5cae5/overview" class="top-bar-link" target="_blank" rel="noopener noreferrer">Organization</a>
       <span class="status-pill">Setup</span>
-      <span class="status-pill install-date" id="install-date-pill" title="Install Date: 2/10/2026"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="install-date-display">2/10/2026</span></span>
+      <span class="status-pill install-date" id="install-date-pill" title="Install Date: 3/22/2026"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <span id="install-date-display">3/22/2026</span></span>
     </div>
   </div>
 
@@ -446,7 +464,8 @@
       <div class="info-item"><label>Email</label><span class="value">lori@crazybusymama.com</span> <input type="hidden" id="input-email" value="lori@crazybusymama.com"><button type="button" class="btn-copy-discreet" onclick="copyEmailToClipboard(this)" title="Copy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button></div>
       <div class="info-item"><label>Company Name</label><span class="value">Skinny Wrap Diva Inc</span></div>
       <div class="info-item"><label>Company Representative</label><span class="value">Lori Conway/Owner</span></div>
-      <div class="info-item"><label> </label><div class="hover-popup-container"><span class="value existing-creator hover-trigger"> Existing Creator (10)</span><span class="hover-popup hover-popup-wide"><div class="hover-popup-columns"><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-1" target="_blank" rel="noopener noreferrer">Yummy Eats</a><a href="https://admin.raptive.com/sites/fake-2" target="_blank" rel="noopener noreferrer">Best Keto Meals</a><a href="https://admin.raptive.com/sites/fake-3" target="_blank" rel="noopener noreferrer">Making Home</a><a href="https://admin.raptive.com/sites/fake-4" target="_blank" rel="noopener noreferrer">Crazy Busy Mama</a><a href="https://admin.raptive.com/sites/fake-5" target="_blank" rel="noopener noreferrer">Skinny Kitchen</a></div><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-6" target="_blank" rel="noopener noreferrer">Fresh Bites Daily</a><a href="https://admin.raptive.com/sites/fake-7" target="_blank" rel="noopener noreferrer">Healthy Mom Life</a><a href="https://admin.raptive.com/sites/fake-8" target="_blank" rel="noopener noreferrer">Quick Recipe Hub</a><a href="https://admin.raptive.com/sites/fake-9" target="_blank" rel="noopener noreferrer">Family Table Blog</a><a href="https://admin.raptive.com/sites/fake-10" target="_blank" rel="noopener noreferrer">Clean Eating Co</a></div></div></span></div></div>
+      <div class="info-item"><label>Sites in Onboarding</label><div class="hover-popup-container"><span class="value existing-creator hover-trigger">(3)</span><span class="hover-popup"><a href="https://admin.raptive.com/onboarding/best-eats" target="_blank" rel="noopener noreferrer">The Best Eats</a><a href="https://admin.raptive.com/onboarding/food-for-families" target="_blank" rel="noopener noreferrer">Food for Families</a><a href="https://admin.raptive.com/onboarding/whats-cooking-with-lori" target="_blank" rel="noopener noreferrer">What's Cooking with Lori</a></span></div></div>
+      <div class="info-item"><label>Existing Creator</label><div class="hover-popup-container"><span class="value existing-creator hover-trigger">(10)</span><span class="hover-popup hover-popup-wide"><div class="hover-popup-columns"><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-1" target="_blank" rel="noopener noreferrer">Yummy Eats</a><a href="https://admin.raptive.com/sites/fake-2" target="_blank" rel="noopener noreferrer">Best Keto Meals</a><a href="https://admin.raptive.com/sites/fake-3" target="_blank" rel="noopener noreferrer">Making Home</a><a href="https://admin.raptive.com/sites/fake-4" target="_blank" rel="noopener noreferrer">Crazy Busy Mama</a><a href="https://admin.raptive.com/sites/fake-5" target="_blank" rel="noopener noreferrer">Skinny Kitchen</a></div><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-6" target="_blank" rel="noopener noreferrer">Fresh Bites Daily</a><a href="https://admin.raptive.com/sites/fake-7" target="_blank" rel="noopener noreferrer">Healthy Mom Life</a><a href="https://admin.raptive.com/sites/fake-8" target="_blank" rel="noopener noreferrer">Quick Recipe Hub</a><a href="https://admin.raptive.com/sites/fake-9" target="_blank" rel="noopener noreferrer">Family Table Blog</a><a href="https://admin.raptive.com/sites/fake-10" target="_blank" rel="noopener noreferrer">Clean Eating Co</a></div></div></span></div></div>
     </div>
     <div class="info-group">
       <div class="info-item"><label>Current Ad Network</label><span class="value">Mediavine</span></div>
@@ -462,15 +481,10 @@
       <div class="more-info-content">
         <div class="more-info-columns">
           <div class="more-info-col-left">
-            <div class="more-info-item">
-              <div class="hover-popup-container">
-                <span class="hover-trigger">Sites in Onboarding (3)</span>
-                <span class="hover-popup">
-                  <a href="https://admin.raptive.com/onboarding/best-eats" target="_blank" rel="noopener noreferrer">The Best Eats</a>
-                  <a href="https://admin.raptive.com/onboarding/food-for-families" target="_blank" rel="noopener noreferrer">Food for Families</a>
-                  <a href="https://admin.raptive.com/onboarding/whats-cooking-with-lori" target="_blank" rel="noopener noreferrer">What's Cooking with Lori</a>
-                </span>
-              </div>
+            <div class="more-info-item more-info-links-row">
+              <a href="https://raptive.zendesk.com/agent/tickets/446711" target="_blank" rel="noopener noreferrer">Zendesk Ticket</a>
+              <span class="more-info-link-sep">·</span>
+              <a href="https://cafemedia.lightning.force.com/lightning/r/MPM4_BASE__Milestone1_Project__c/a0zQQ0000028njxYAA/view" target="_blank" rel="noopener noreferrer">Salesforce Project</a>
             </div>
             <div class="more-info-item">
               <div class="hover-popup-container">
@@ -480,11 +494,6 @@
                   <a href="https://admin.raptive.com/users/fake-user-2" target="_blank" rel="noopener noreferrer">Michael Chen</a>
                 </span>
               </div>
-            </div>
-            <div class="more-info-item more-info-links-row">
-              <a href="https://raptive.zendesk.com/agent/tickets/446711" target="_blank" rel="noopener noreferrer">Zendesk Ticket</a>
-              <span class="more-info-link-sep">·</span>
-              <a href="https://cafemedia.lightning.force.com/lightning/r/MPM4_BASE__Milestone1_Project__c/a0zQQ0000028njxYAA/view" target="_blank" rel="noopener noreferrer">Salesforce Project</a>
             </div>
             <div class="more-info-item"><a href="#" target="_blank" rel="noopener noreferrer"> View dashboard as user</a></div>
             <div class="more-info-item">
@@ -498,11 +507,18 @@
             <div class="more-info-item"><label style="color:var(--text-muted);">Application Submit Date</label><span class="value" style="display:block;">Jan 15, 2026</span></div>
             <div class="more-info-item"><label style="color:var(--text-muted);">Application Accepted Date</label><span class="value" style="display:block;">Jan 28, 2026</span></div>
           </div>
-          <div class="more-info-col-right more-info-col-dates">
-            <div class="more-info-item"><label style="color:var(--text-muted);">Actual Start Date</label><input type="date" class="info-date-input" id="actual-start-date" value="2026-01-15"></div>
-            <div class="more-info-item"><label style="color:var(--text-muted);">Second Analysis Date</label><input type="date" class="info-date-input" id="second-analysis-date" value="2026-01-28"></div>
-            <div class="more-info-item"><label style="color:var(--text-muted);">Expected Install Date</label><input type="date" class="info-date-input" id="expected-install-date" value="2026-02-10"></div>
-            <div class="more-info-item"><label style="color:var(--text-muted);">Scheduled Install Date</label><input type="date" class="info-date-input" id="scheduled-install-date" value="2026-02-10"></div>
+        </div>
+        <div class="more-info-dates-wrap">
+          <div class="dates-grid">
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">Actual Start Date</label><input type="date" class="info-date-input" id="actual-start-date" value="2026-02-25"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">Notice Date</label><input type="date" class="info-date-input" id="notice-date" value="2026-02-27"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">OWII Macro</label><input type="date" class="info-date-input" id="owii-macro-date" value="2026-03-02"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">Waiting Out Your Notice Macro</label><input type="date" class="info-date-input" id="waiting-notice-macro-date" value="2026-03-05"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">AI Resources Macro</label><input type="date" class="info-date-input" id="ai-resources-macro-date" value="2026-03-08"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">2A Reminder Macro</label><input type="date" class="info-date-input" id="2a-reminder-macro-date" value="2026-03-12"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">Second Analysis Date</label><input type="date" class="info-date-input" id="second-analysis-date" value="2026-03-15"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">Expected Install Date</label><input type="date" class="info-date-input" id="expected-install-date" value="2026-03-22"></div>
+            <div class="more-info-item"><label style="color:var(--text-muted);font-size:10px;text-transform:uppercase;">Scheduled Install Date</label><input type="date" class="info-date-input" id="scheduled-install-date" value="2026-03-22"></div>
           </div>
         </div>
 
@@ -523,6 +539,13 @@
       </div>
     </div>
   </section>
+
+  <!-- What's Next -->
+  <div class="whats-next" id="whats-next">
+    <span class="whats-next-label">What's Next</span>
+    <span class="whats-next-sep">→</span>
+    <span class="whats-next-content" id="whats-next-content">—</span>
+  </div>
 
   <!-- Timeline with Collapsible Sections -->
   <div class="timeline">
@@ -767,7 +790,7 @@
           <div>
             <div class="field-label-row"><span class="icon success">✓</span><div class="field-label">Payment & Tax Info</div></div>
             
-            <div class="field-value" style="margin-top:6px;">"Skinny Wrap Divas INC" (Payee) = "Skinny Wrap Divas INC" (Organization)</div>
+            <div class="field-value payee-match" style="margin-top:6px;">"Skinny Wrap Divas INC" (Payee) = "Skinny Wrap Divas INC" (Organization)</div>
             <div class="section-timestamp" style="margin-top:6px;">Jan 23, 2026, 11:09:05 AM</div>
 
           </div>
@@ -930,6 +953,40 @@ function updateNotesCharCount() {
   var countEl = document.getElementById('notes-char-current');
   if (input && countEl) countEl.textContent = input.value.length;
 }
+var DATES_FOR_WHATS_NEXT = [
+  { id: 'actual-start-date', label: 'Actual Start Date' },
+  { id: 'notice-date', label: 'Notice Date' },
+  { id: 'owii-macro-date', label: 'OWII Macro' },
+  { id: 'waiting-notice-macro-date', label: 'Waiting Out Your Notice Macro' },
+  { id: 'ai-resources-macro-date', label: 'AI Resources Macro' },
+  { id: '2a-reminder-macro-date', label: '2A Reminder Macro' },
+  { id: 'second-analysis-date', label: 'Second Analysis Date' },
+  { id: 'scheduled-install-date', label: 'Scheduled Install Date' }
+];
+function updateWhatsNext() {
+  var el = document.getElementById('whats-next-content');
+  if (!el) return;
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var soonest = null;
+  var soonestLabel = '';
+  for (var i = 0; i < DATES_FOR_WHATS_NEXT.length; i++) {
+    var inp = document.getElementById(DATES_FOR_WHATS_NEXT[i].id);
+    if (!inp || !inp.value) continue;
+    var d = new Date(inp.value);
+    d.setHours(0, 0, 0, 0);
+    if (d >= today && (!soonest || d < soonest)) {
+      soonest = d;
+      soonestLabel = DATES_FOR_WHATS_NEXT[i].label;
+    }
+  }
+  if (soonest && soonestLabel) {
+    var formatted = (soonest.getMonth() + 1) + '/' + soonest.getDate() + '/' + soonest.getFullYear();
+    el.textContent = soonestLabel + ' — ' + formatted;
+  } else {
+    el.textContent = 'No upcoming dates';
+  }
+}
 document.addEventListener('DOMContentLoaded', function() {
   syncInstallDatePill();
   var scheduledInput = document.getElementById('scheduled-install-date');
@@ -940,6 +997,14 @@ document.addEventListener('DOMContentLoaded', function() {
   var notesInput = document.getElementById('more-info-notes');
   if (notesInput) notesInput.addEventListener('input', updateNotesCharCount);
   updateNotesCharCount();
+  updateWhatsNext();
+  DATES_FOR_WHATS_NEXT.forEach(function(item) {
+    var inp = document.getElementById(item.id);
+    if (inp) {
+      inp.addEventListener('change', updateWhatsNext);
+      inp.addEventListener('input', updateWhatsNext);
+    }
+  });
 });
 </script>
 </body>

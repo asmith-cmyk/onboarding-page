@@ -402,6 +402,11 @@
     .more-info-subsection-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; }
     .more-info-links-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
     .more-info-link-sep { color: var(--text-muted); font-size: 12px; }
+    .creator-growth-header { margin-bottom: 8px; }
+    .creator-growth-subsection.creator-growth-disabled .creator-growth-content { display: none; }
+    .creator-growth-toggle-label { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+    .creator-growth-toggle-label input { cursor: pointer; }
+    .creator-growth-content { margin-top: 0; }
     .creator-growth-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 13px; }
     .creator-growth-row .cg-lead-select { margin: 0; }
     .creator-growth-sep { color: var(--text-muted); font-size: 12px; }
@@ -527,18 +532,25 @@
           </div>
         </div>
 
-        <div class="more-info-subsection">
-          <div class="more-info-subsection-title">Creator Growth</div>
-          <div class="creator-growth-row">
-            <span>Assisted by Creator Growth —</span>
-            <select class="cg-lead-select" id="cg-lead-select">
-              <option value="Carol Edwards" selected>Carol Edwards</option>
-              <option value="Chris Peck">Chris Peck</option>
-              <option value="Antonio Minuta">Antonio Minuta</option>
-              <option value="Janoo Danneeru">Janoo Danneeru</option>
-            </select>
-            <span class="creator-growth-sep">·</span>
-            <a href="https://cafemedia.lightning.force.com/lightning/r/Sales_Handoff__c/a0eQQ000005zQqjYAE/view" target="_blank" rel="noopener noreferrer">Sales Handoff</a>
+        <div class="more-info-subsection creator-growth-subsection">
+          <div class="creator-growth-header">
+            <label class="creator-growth-toggle-label">
+              <input type="checkbox" id="creator-growth-toggle" checked>
+              <span class="more-info-subsection-title">Creator Growth</span>
+            </label>
+          </div>
+          <div class="creator-growth-content" id="creator-growth-content">
+            <div class="creator-growth-row">
+              <span>Assisted by Creator Growth —</span>
+              <select class="cg-lead-select" id="cg-lead-select">
+                <option value="Carol Edwards" selected>Carol Edwards</option>
+                <option value="Chris Peck">Chris Peck</option>
+                <option value="Antonio Minuta">Antonio Minuta</option>
+                <option value="Janoo Danneeru">Janoo Danneeru</option>
+              </select>
+              <span class="creator-growth-sep">·</span>
+              <a href="https://cafemedia.lightning.force.com/lightning/r/Sales_Handoff__c/a0eQQ000005zQqjYAE/view" target="_blank" rel="noopener noreferrer">Sales Handoff</a>
+            </div>
           </div>
         </div>
       </div>
@@ -992,12 +1004,24 @@ function updateWhatsNext() {
     el.textContent = 'No upcoming dates';
   }
 }
+function toggleCreatorGrowthSection() {
+  var cb = document.getElementById('creator-growth-toggle');
+  var subsection = document.querySelector('.creator-growth-subsection');
+  if (cb && subsection) {
+    subsection.classList.toggle('creator-growth-disabled', !cb.checked);
+  }
+}
 document.addEventListener('DOMContentLoaded', function() {
   syncInstallDatePill();
   var scheduledInput = document.getElementById('scheduled-install-date');
   if (scheduledInput) {
     scheduledInput.addEventListener('change', syncInstallDatePill);
     scheduledInput.addEventListener('input', syncInstallDatePill);
+  }
+  var cgToggle = document.getElementById('creator-growth-toggle');
+  if (cgToggle) {
+    cgToggle.addEventListener('change', toggleCreatorGrowthSection);
+    toggleCreatorGrowthSection();
   }
   var notesInput = document.getElementById('more-info-notes');
   if (notesInput) notesInput.addEventListener('input', updateNotesCharCount);

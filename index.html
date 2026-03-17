@@ -123,6 +123,8 @@
     .info-item.span-2 { grid-column: span 2; }
     .info-date-input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; background: var(--surface); color: var(--text); min-width: 0; }
     .info-date-input:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2); }
+    .info-select { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-weight: 500; background: var(--surface); color: var(--text); min-width: 120px; cursor: pointer; }
+    .info-select:focus { outline: none; border-color: var(--accent); }
     .cg-lead-select { padding: 4px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 13px; background: var(--surface); }
 
     /* Timeline */
@@ -476,7 +478,8 @@
       <div class="info-item"><label>Company Representative</label><span class="value">Lori Conway (Owner)</span></div>
       <div class="info-item"><label>Sites in Onboarding</label><div class="hover-popup-container"><span class="value existing-creator hover-trigger">(3)</span><span class="hover-popup"><a href="https://admin.raptive.com/onboarding/best-eats" target="_blank" rel="noopener noreferrer">The Best Eats</a><a href="https://admin.raptive.com/onboarding/food-for-families" target="_blank" rel="noopener noreferrer">Food for Families</a><a href="https://admin.raptive.com/onboarding/whats-cooking-with-lori" target="_blank" rel="noopener noreferrer">What's Cooking with Lori</a></span></div></div>
       <div class="info-item"><label>Existing Creator</label><div class="hover-popup-container"><span class="value existing-creator hover-trigger">(10)</span><span class="hover-popup hover-popup-wide"><div class="hover-popup-columns"><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-1" target="_blank" rel="noopener noreferrer">Yummy Eats</a><a href="https://admin.raptive.com/sites/fake-2" target="_blank" rel="noopener noreferrer">Best Keto Meals</a><a href="https://admin.raptive.com/sites/fake-3" target="_blank" rel="noopener noreferrer">Making Home</a><a href="https://admin.raptive.com/sites/fake-4" target="_blank" rel="noopener noreferrer">Crazy Busy Mama</a><a href="https://admin.raptive.com/sites/fake-5" target="_blank" rel="noopener noreferrer">Skinny Kitchen</a></div><div class="hover-popup-col"><a href="https://admin.raptive.com/sites/fake-6" target="_blank" rel="noopener noreferrer">Fresh Bites Daily</a><a href="https://admin.raptive.com/sites/fake-7" target="_blank" rel="noopener noreferrer">Healthy Mom Life</a><a href="https://admin.raptive.com/sites/fake-8" target="_blank" rel="noopener noreferrer">Quick Recipe Hub</a><a href="https://admin.raptive.com/sites/fake-9" target="_blank" rel="noopener noreferrer">Family Table Blog</a><a href="https://admin.raptive.com/sites/fake-10" target="_blank" rel="noopener noreferrer">Clean Eating Co</a></div></div></span></div></div>
-      <div class="info-item"><label>Onboarding Owner</label><span class="value">Antoinette Smith</span></div>
+      <div class="info-item"><label>Onboarding Owner</label><select id="onboarding-owner-select" class="info-select"><option value="Antoinette">Antoinette</option><option value="Amy">Amy</option><option value="Michelle">Michelle</option><option value="Whitney">Whitney</option></select></div>
+
     </div>
     <div class="info-group">
       <div class="info-item"><label>Current Ad Network</label><span class="value">Mediavine</span></div>

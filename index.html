@@ -21,7 +21,7 @@
     }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
-    .page { max-width: 1440px; margin: 0 auto; padding: 24px 32px; }
+    .page { max-width: 1050px; margin: 0 auto; padding: 24px; }
 
     /* Top Bar (Sites header) */
     .top-bar {
@@ -37,6 +37,9 @@
       top: 0;
       background: var(--bg);
       z-index: 100;
+      width: min(1440px, calc(100vw - 64px));
+      margin-left: 50%;
+      transform: translateX(-50%);
     }
     .top-bar-left {
       display: flex;

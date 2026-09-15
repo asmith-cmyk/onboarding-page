@@ -21,14 +21,14 @@
     }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
-    .page { max-width: 1050px; margin: 0 auto; padding: 24px; }
+    .page { max-width: 1440px; margin: 0 auto; padding: 24px 32px; }
 
     /* Top Bar (Sites header) */
     .top-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 24px;
       margin-bottom: 20px;
       padding: 12px 0;
       border-bottom: 1px solid var(--border);
@@ -41,7 +41,7 @@
     .top-bar-left {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
       flex: 1;
       min-width: 0;
     }
@@ -68,7 +68,7 @@
     .top-bar-search {
       flex: 1;
       min-width: 180px;
-      max-width: 280px;
+      max-width: 360px;
       padding: 6px 12px;
       background: #f3f4f6;
       border: 1px solid var(--border);
@@ -79,8 +79,9 @@
     .top-bar-right {
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 16px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
     }
     .top-bar-link { font-size: 13px; font-weight: 500; color: var(--green); text-decoration: underline; }
     .top-bar-link:hover { color: #047857; }
